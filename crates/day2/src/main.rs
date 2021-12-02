@@ -9,7 +9,7 @@ enum Command {
 fn main() {
     println!("input: {:?}", INPUT);
     println!("problem1: {}", solve_problem1(INPUT));
-    // println!("problem2: {}", solve_problem2(INPUT));
+    println!("problem2: {}", solve_problem2(INPUT));
 }
 
 #[allow(unused)]
@@ -26,7 +26,14 @@ fn solve_problem1(input: &str) -> i32 {
 
 #[allow(unused)]
 fn solve_problem2(input: &str) -> i32 {
-    todo!()
+    let (x, y, _) = commands(input)
+        .iter()
+        .fold((0, 0, 0), |(x, y, aim), elem| match elem {
+            Command::Forward(n) => (x + n, y + n * aim, aim),
+            Command::Down(n) => (x, y, aim + n),
+            Command::Up(n) => (x, y, aim - n),
+        });
+    x * y
 }
 
 fn commands(input: &str) -> Vec<Command> {
