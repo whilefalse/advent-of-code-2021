@@ -17,6 +17,8 @@ fn solve_problem1(input: &str) -> i32 {
 
 #[allow(unused)]
 fn solve_problem2(input: &str) -> i32 {
+    // Two of the numbers are always the same in each 3-item window, so we only need to compare
+    // the start of the first window to the end of the second window.
     let ns = numbers(input);
     ns.iter()
         .zip(ns.iter().skip(3))
