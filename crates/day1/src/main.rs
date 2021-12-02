@@ -18,14 +18,8 @@ fn solve_problem1(input: &str) -> i32 {
 #[allow(unused)]
 fn solve_problem2(input: &str) -> i32 {
     let ns = numbers(input);
-    let sums = ns
-        .iter()
-        .zip(ns.iter().skip(1))
-        .zip(ns.iter().skip(2))
-        .map(|((one, two), three)| one + two + three)
-        .collect::<Vec<_>>();
-    sums.iter()
-        .zip(sums.iter().skip(1))
+    ns.iter()
+        .zip(ns.iter().skip(3))
         .filter(|(one, two)| two > one)
         .count() as i32
 }
