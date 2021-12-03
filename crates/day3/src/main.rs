@@ -40,13 +40,13 @@ where
             candidates
         } else {
             let place = 1 << power;
-            let ones = candidates.iter().filter(|n| *n & place > 0).count();
+            let ones = candidates.iter().filter(|&&n| n & place > 0).count();
             let zeroes = candidates.len() - ones;
             let keep_ones = keep_ones(ones, zeroes);
 
             candidates
                 .into_iter()
-                .filter(|n| {
+                .filter(|&n| {
                     if keep_ones {
                         n & place > 0
                     } else {
