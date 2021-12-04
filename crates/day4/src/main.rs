@@ -11,52 +11,32 @@ fn main() {
 fn solve_problem1(input: &str) -> usize {
     let (numbers, boards) = parse(input);
     let mut called = [false; 100];
-    let mut winner: Option<&Vec<usize>> = None;
-    let mut last_called = 0;
     for number in numbers {
-        last_called = number;
         called[number] = true;
         if let Some(w) = boards.iter().find(|&board| is_winner(board, called)) {
-            winner = Some(w);
-            break;
-        }
-    }
-    match winner {
-        None => panic!(),
-        Some(w) => {
             let sum: usize = w.iter().filter(|&&x| !called[x]).sum();
-            sum * last_called
+            return sum * number;
         }
     }
+    0
 }
 
 #[allow(unused)]
 fn solve_problem2(input: &str) -> usize {
     let (numbers, boards) = parse(input);
     let mut called = [false; 100];
-    let mut last_called = 0;
-    let mut winners: Vec<&Vec<usize>> = vec![];
     let mut remaining = boards.iter().collect::<Vec<_>>();
-
     for number in numbers {
-        last_called = number;
         called[number] = true;
-
-        winners = remaining
-            .iter()
-            .map(|b| *b)
-            .filter(|board| is_winner(board, called))
-            .collect::<Vec<_>>();
+        let before = remaining.clone();
         remaining.retain(|board| !is_winner(board, called));
 
         if remaining.is_empty() {
-            break;
+            let sum: usize = before[0].iter().filter(|&&x| !called[x]).sum();
+            return sum * number;
         }
     }
-
-    let w = &winners[0];
-    let sum: usize = w.iter().filter(|&&x| !called[x]).sum();
-    sum * last_called
+    0
 }
 
 fn is_winner(board: &Vec<usize>, called: [bool; 100]) -> bool {
