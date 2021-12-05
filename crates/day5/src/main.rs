@@ -73,7 +73,7 @@ fn parse(input: &str) -> Vec<Line> {
     input
         .lines()
         .map(|line| {
-            let x = line
+            let coords = line
                 .split(" -> ")
                 .map(|point| {
                     point
@@ -84,12 +84,12 @@ fn parse(input: &str) -> Vec<Line> {
                 .collect::<Vec<_>>();
             Line {
                 start: Point {
-                    x: x[0][0],
-                    y: x[0][1],
+                    x: coords[0][0],
+                    y: coords[0][1],
                 },
                 end: Point {
-                    x: x[1][0],
-                    y: x[1][1],
+                    x: coords[1][0],
+                    y: coords[1][1],
                 },
             }
         })
