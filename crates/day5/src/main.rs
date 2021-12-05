@@ -61,8 +61,8 @@ fn all_points_in_lines(lines: Vec<Line>) -> Vec<Point> {
 
 fn duplicate_points(points: Vec<Point>) -> u32 {
     points
-        .iter()
-        .map(|p| (p, p))
+        .into_iter()
+        .map(|p| (p, ()))
         .into_group_map()
         .into_iter()
         .filter(|(_, v)| v.len() > 1)
