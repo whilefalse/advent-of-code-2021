@@ -24,13 +24,12 @@ fn solve_problem2(input: &str) -> i32 {
         .into_iter()
         .map(|(i, val)| basin_size(&grid, width, i))
         .collect::<Vec<_>>();
-    println!("{:?}", sizes);
     sizes.sort();
     sizes.iter().rev().take(3).fold(1, |acc, item| acc * item)
 }
 
+// Uses a flood fill algorithm
 fn basin_size(grid: &Vec<i32>, width: i32, index: usize) -> i32 {
-    println!("basin size for index {}", index);
     let mut basin: Vec<usize> = vec![];
     let mut queue: Vec<usize> = vec![];
     queue.push(index);
@@ -39,18 +38,14 @@ fn basin_size(grid: &Vec<i32>, width: i32, index: usize) -> i32 {
         if basin.contains(&i) {
             continue;
         }
-        println!("popped: {}", i);
         basin.push(i as usize);
         let ns = neighbours(grid.len() as i32, width, i as i32);
-        println!("neighbours: {:?}", ns);
         for i in ns {
             if grid[i] != 9 {
-                println!("pushing index {}, val {}", i, grid[i]);
                 queue.push(i)
             }
         }
     }
-    println!("result: {:?} {}", basin, basin.len());
     basin.len() as i32
 }
 
