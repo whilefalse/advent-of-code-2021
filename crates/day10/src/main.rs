@@ -17,8 +17,7 @@ fn solve_problem2(input: &str) -> u64 {
     let lines = parse(input);
     let mut scores = lines
         .into_iter()
-        .map(|line| completion_score(line))
-        .filter(|score| score > &0)
+        .filter_map(|line| completion_score(line))
         .collect::<Vec<_>>();
     scores.sort();
     scores[(scores.len() - 1) / 2]
@@ -46,7 +45,7 @@ fn syntax_error_score(line: &str) -> i32 {
     0
 }
 
-fn completion_score(line: &str) -> u64 {
+fn completion_score(line: &str) -> Option<u64> {
     let mut stack: Vec<char> = vec![];
     for ch in line.chars() {
         if ch == '(' || ch == '[' || ch == '{' || ch == '<' {
@@ -55,7 +54,7 @@ fn completion_score(line: &str) -> u64 {
             let start = stack.pop().unwrap();
             let expected_end = expected_end(start);
             if ch != expected_end {
-                return 0;
+                return None;
             }
         }
     }
@@ -73,9 +72,9 @@ fn completion_score(line: &str) -> u64 {
                     _ => panic!(),
                 });
         }
-        score
+        Some(score)
     } else {
-        0
+        None
     }
 }
 
