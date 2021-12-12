@@ -12,16 +12,12 @@ fn main() {
 
 #[allow(unused)]
 fn solve_problem1(input: &str) -> u32 {
-    let parsed = parse(input);
-    let paths = find_all_paths(&parsed, &mut vec!["start"], true);
-    paths
+    find_all_paths(&parse(input), &mut vec!["start"], true)
 }
 
 #[allow(unused)]
 fn solve_problem2(input: &str) -> u32 {
-    let parsed = parse(input);
-    let paths = find_all_paths(&parsed, &mut vec!["start"], false);
-    paths
+    find_all_paths(&parse(input), &mut vec!["start"], false)
 }
 
 fn find_all_paths<'a>(
