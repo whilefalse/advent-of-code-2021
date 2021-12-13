@@ -40,26 +40,26 @@ fn solve_problem2(input: &str) -> i32 {
 fn fold(points: &HashSet<Point>, fold: &Fold) -> HashSet<Point> {
     points
         .into_iter()
-        .filter_map(|Point { x, y }| {
+        .filter_map(|&Point { x, y }| {
             let new_point = match *fold {
                 Fold::Horizontal(fold) => {
-                    if *x > fold {
+                    if x > fold {
                         Point {
                             x: fold * 2 - x,
-                            y: *y,
+                            y: y,
                         }
                     } else {
-                        Point { x: *x, y: *y }
+                        Point { x: x, y: y }
                     }
                 }
                 Fold::Vertical(fold) => {
-                    if *y > fold {
+                    if y > fold {
                         Point {
-                            x: *x,
+                            x: x,
                             y: fold * 2 - y,
                         }
                     } else {
-                        Point { x: *x, y: *y }
+                        Point { x: x, y: y }
                     }
                 }
             };
@@ -79,12 +79,12 @@ fn print_grid(points: &HashSet<Point>) {
     for y in 0..=*maxy {
         for x in 0..=*maxx {
             if points.contains(&Point { x, y }) {
-                print!("#");
+                print!("||");
             } else {
-                print!(" ");
+                print!("  ");
             }
         }
-        println!("");
+        println!();
     }
 }
 
